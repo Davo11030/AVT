@@ -1,5 +1,4 @@
-import React from 'react';
-import './index.css';
+import './globals.css';
 
 const LoginForm = () => (
   <div className="flex flex-col items-center bg-gray-100 h-screen justify-center">
