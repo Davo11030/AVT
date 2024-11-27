@@ -27,7 +27,7 @@ export default function Login() {
   return (
     <div className="flex flex-col items-center justify-center">
       {/* Barra superior */}
-      <div className="w-full bg-[#ad1717] py-4 text-center">
+      <div className="w-full bg-[#707070] py-4 text-center">
         <h1 className="text-xl text-black font-semibold">AVT WARRIORS</h1>
       </div>
       
