@@ -1,11 +1,12 @@
-import { verify } from 'bcrypt';
+import { supabase } from '@/lib/supabase'; // Ruta del cliente de Supabase
+import { compare } from 'bcryptjs'; // En lugar de 'bcrypt'
 import NextAuth from 'next-auth';
-import Providers from 'next-auth/providers';
-import { supabase } from '../lib/supabase'; // Ruta del cliente de Supabase
+import CredentialsProvider from 'next-auth/providers/credentials';
+
 
 export default NextAuth({
   providers: [
-    Providers.Credentials({
+    CredentialsProvider({
       name: 'Credentials',
       credentials: {
         username: { label: 'Usuario', type: 'text' },
@@ -36,7 +37,7 @@ export default NextAuth({
         }
 
         // Verificar la contraseña
-        const isPasswordValid = await verify(data.contraseña, password);
+        const isPasswordValid = await compare(data.contraseña, password);
         if (isPasswordValid) {
           // Determinar el rol basado en la tabla de origen y el idrol
           let role = 'trainer'; // Valor por defecto
