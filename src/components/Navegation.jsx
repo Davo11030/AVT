@@ -55,10 +55,10 @@ const TravelMenu = () => {
           <ul className="w-full space-y-4 -ml-12">
             <li>
               <button
-                className="w-full text-center py-4 text-lg hover:bg-gray-200"
-                onClick={() => handleNavigation("/playa")}
+                className="w-full text-center py-4 text-lg hover:bg-gray-200 "
+                onClick={() => handleNavigation("pages/admin/entrenadores")}
               >
-                Playa
+                Entrenadores
               </button>
             </li>
             <li>
