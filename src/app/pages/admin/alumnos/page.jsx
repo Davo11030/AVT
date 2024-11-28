@@ -2,12 +2,14 @@
 
 import { useState } from "react";
 
-export default function Clases() {
-    const [clases, setClases] = useState([]);
+export default function Alumnos() {
+    const [alumnos, setAlumnos] = useState([]);
     const [formData, setFormData] = useState({
         nombre: "",
-        hora: "",
-        dias: ""
+        fechaNacimiento: "",
+        telefono: "",
+        usuario: "",
+        contrasena: ""
     });
     const [selectedIndex, setSelectedIndex] = useState(null);
 
@@ -17,44 +19,46 @@ export default function Clases() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        const { nombre, hora, dias } = formData;
+        const { nombre, fechaNacimiento, telefono, usuario, contrasena } = formData;
 
-        if (!nombre || !hora || !dias) {
+        if (!nombre || !fechaNacimiento || !telefono || !usuario || !contrasena) {
             alert("Por favor, completa todos los campos obligatorios.");
             return;
         }
 
         if (selectedIndex !== null) {
-            const updatedClases = [...clases];
-            updatedClases[selectedIndex] = formData;
-            setClases(updatedClases);
+            const updatedAlumnos = [...alumnos];
+            updatedAlumnos[selectedIndex] = formData;
+            setAlumnos(updatedAlumnos);
             setSelectedIndex(null);
         } else {
-            setClases([...clases, formData]);
+            setAlumnos([...alumnos, formData]);
         }
         resetForm();
     };
 
     const handleDelete = () => {
         if (selectedIndex !== null) {
-            const updatedClases = clases.filter((_, i) => i !== selectedIndex);
-            setClases(updatedClases);
+            const updatedAlumnos = alumnos.filter((_, i) => i !== selectedIndex);
+            setAlumnos(updatedAlumnos);
             resetForm();
         } else {
-            alert("Selecciona una clase para eliminar.");
+            alert("Selecciona un alumno para eliminar.");
         }
     };
 
     const handleSelect = (index) => {
-        setFormData(clases[index]);
+        setFormData(alumnos[index]);
         setSelectedIndex(index);
     };
 
     const resetForm = () => {
         setFormData({
             nombre: "",
-            hora: "",
-            dias: ""
+            fechaNacimiento: "",
+            telefono: "",
+            usuario: "",
+            contrasena: ""
         });
         setSelectedIndex(null);
     };
@@ -115,7 +119,7 @@ export default function Clases() {
             {/* Contenedor del formulario */}
             <div style={styles.formContainer}>
                 <h2 style={{ textAlign: "center", marginBottom: "15px", color: "white", fontSize: "18px" }}>
-                    Clases o Horarios
+                    Registro de Alumnos
                 </h2>
                 <form
                     onSubmit={handleSubmit}
@@ -126,9 +130,11 @@ export default function Clases() {
                     }}
                 >
                     {[
-                        { label: "Nombre de la clase", name: "nombre", type: "text" },
-                        { label: "Hora", name: "hora", type: "time" },
-                        { label: "Días", name: "dias", type: "text", placeholder: "Ejemplo: Lunes, Miércoles, Viernes" }
+                        { label: "Nombre del alumno", name: "nombre", type: "text" },
+                        { label: "Fecha de nacimiento", name: "fechaNacimiento", type: "date" },
+                        { label: "Teléfono", name: "telefono", type: "text" },
+                        { label: "Usuario", name: "usuario", type: "text" },
+                        { label: "Contraseña", name: "contrasena", type: "password" }
                     ].map((field, index) => (
                         <label htmlFor={field.name} key={index} style={{ color: "white", fontSize: "14px" }}>
                             {field.label}:
@@ -138,7 +144,6 @@ export default function Clases() {
                                 name={field.name}
                                 value={formData[field.name]}
                                 onChange={handleChange}
-                                placeholder={field.placeholder || ""}
                                 style={{
                                     width: "100%",
                                     padding: "8px",
@@ -163,23 +168,25 @@ export default function Clases() {
             {/* Contenedor de la lista */}
             <div style={styles.listContainer}>
                 <h2 style={{ textAlign: "center", marginBottom: "10px", color: "#333", fontSize: "18px" }}>
-                    Lista de Clases
+                    Lista de Alumnos
                 </h2>
                 <div>
-                    {clases.length === 0 ? (
-                        <p style={{ textAlign: "center", color: "#777" }}>No hay clases registradas.</p>
+                    {alumnos.length === 0 ? (
+                        <p style={{ textAlign: "center", color: "#777" }}>No hay alumnos registrados.</p>
                     ) : (
                         <ul style={{ listStyleType: "none", padding: 0, margin: 0 }}>
-                            {clases.map((clase, index) => (
+                            {alumnos.map((alumno, index) => (
                                 <li
                                     key={index}
                                     style={styles.listItem(selectedIndex === index)}
                                     onClick={() => handleSelect(index)}
                                 >
                                     <div style={{ color: "white" }}>
-                                        <p><strong>Nombre:</strong> {clase.nombre}</p>
-                                        <p><strong>Hora:</strong> {clase.hora}</p>
-                                        <p><strong>Días:</strong> {clase.dias}</p>
+                                        <p><strong>Nombre:</strong> {alumno.nombre}</p>
+                                        <p><strong>Fecha de nacimiento:</strong> {alumno.fechaNacimiento}</p>
+                                        <p><strong>Teléfono:</strong> {alumno.telefono}</p>
+                                        <p><strong>Usuario:</strong> {alumno.usuario}</p>
+                                        <p><strong>Contraseña:</strong> {alumno.contrasena}</p>
                                     </div>
                                 </li>
                             ))}
