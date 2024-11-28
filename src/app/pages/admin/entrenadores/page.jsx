@@ -1,5 +1,6 @@
 "use client";
 
+import TravelMenu from '@/components/Navegation';
 import { createClient } from "@/utils/supabase/server";
 import { useEffect, useState } from "react";
 
@@ -31,13 +32,26 @@ export default function Entrenadores() {
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
+
+        const { name, value } = e.target;
+    
+        // Restringe el campo "telefono" para aceptar solo números
+        if (name === "telefono") {
+            const numericValue = value.replace(/[^0-9]/g, ""); // Elimina cualquier carácter que no sea un número
+            setFormData({ ...formData, [name]: numericValue });
+        } else {
+            setFormData({ ...formData, [name]: value });
+        }
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const { nombre, disciplina, telefono, usuario, contrasena } = formData;
-    
-        if (!nombre || !disciplina || !telefono || !usuario || !contrasena) {
+        const { nombre, disciplina, telefono, usuario, contraseña } = formData;
+        if (!/^\d+$/.test(telefono)) {
+            alert("El número de teléfono debe contener solo dígitos.");
+            return;
+        }
+        if (!nombre || !disciplina || !telefono || !usuario || !contraseña) {
         alert("Por favor, completa todos los campos obligatorios.");
         return;
         }
@@ -46,16 +60,16 @@ export default function Entrenadores() {
         const supabase = await createClient();
         if (selectedIndex !== null) {
             // Actualizar entrenador existente
-            const id = entrenadores[selectedIndex].id;
+            const identrenador = entrenadores[selectedIndex].identrenador;
             const { error } = await supabase
             .from("entrenadores")
             .update(formData)
-            .eq("id", id);
+            .eq("identrenador", identrenador);
     
             if (error) throw error;
     
             const updatedEntrenadores = [...entrenadores];
-            updatedEntrenadores[selectedIndex] = { ...formData, id };
+            updatedEntrenadores[selectedIndex] = { ...formData, identrenador };
             setEntrenadores(updatedEntrenadores);
         } else {
             // Agregar nuevo entrenador
@@ -77,8 +91,8 @@ export default function Entrenadores() {
         if (selectedIndex !== null) {
         try {
             const supabase = await createClient();
-            const id = entrenadores[selectedIndex].id;
-            const { error } = await supabase.from("entrenadores").delete().eq("id", id);
+            const id = entrenadores[selectedIndex].identrenador;
+            const { error } = await supabase.from("entrenadores").delete().eq("identrenador", id);
             if (error) throw error;
 
             const updatedEntrenadores = entrenadores.filter((_, i) => i !== selectedIndex);
@@ -111,6 +125,7 @@ export default function Entrenadores() {
     return (
         <div className="flex flex-col md:flex-row justify-between items-start h-screen bg-gray-200 p-4 space-y-4 md:space-y-0">
         {/* Formulario */}
+        <TravelMenu/>
         <div className="w-full md:w-2/5 bg-gray-800 text-white p-6 rounded-lg shadow-lg">
             <h2 className="text-center text-xl font-bold mb-4">Entrenadores</h2>
             <form onSubmit={handleSubmit} className="flex flex-col space-y-4">

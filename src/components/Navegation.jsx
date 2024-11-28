@@ -55,26 +55,26 @@ const TravelMenu = () => {
           <ul className="w-full space-y-4 -ml-12">
             <li>
               <button
-                className="w-full text-center py-4 text-lg hover:bg-gray-200 "
-                onClick={() => handleNavigation("pages/admin/entrenadores")}
+                className="w-full text-center py-4 text-lg hover:bg-gray-200 text-black"
+                onClick={() => handleNavigation("/pages/admin/entrenadores")}
               >
                 Entrenadores
               </button>
             </li>
             <li>
               <button
-                className="w-full text-center py-4 text-lg hover:bg-gray-200"
-                onClick={() => handleNavigation("/montana")}
+                className="w-full text-center py-4 text-lg hover:bg-gray-200 text-black"
+                onClick={() => handleNavigation("/pages/admin/horarios")}
               >
-                Montaña
+                Horarios
               </button>
             </li>
             <li>
               <button
-                className="w-full text-center py-4 text-lg hover:bg-gray-200"
-                onClick={() => handleNavigation("/ciudad")}
+                className="w-full text-center py-4 text-lg hover:bg-gray-200 text-black"
+                onClick={() => handleNavigation("/pages/admin/alumnos")}
               >
-                Ciudad
+                Alumnos
               </button>
             </li>
           </ul>
