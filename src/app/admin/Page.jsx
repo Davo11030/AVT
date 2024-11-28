@@ -1,7 +1,7 @@
 'use client';
+import StudentList from '@/components/StudentList';
+import TrainerCard from '@/components/TrainerCard';
 import { useEffect, useState } from 'react';
-import StudentList from '../components/StudentList';
-import TrainerCard from '../components/TrainerCard';
 
 const AdminPage = () => {
   // Puedes usar useState y useEffect si los datos son dinámicos
@@ -18,8 +18,8 @@ const AdminPage = () => {
     ]);
 
     setTrainers([
-      { id: 1, name: "Carlos López", age: 35, discipline: "MMA", photo: "/trainer1.png" },
-      { id: 2, name: "Ana Pérez", age: 29, discipline: "Kick Boxing", photo: "/trainer2.png" },
+      { id: 1, name: "Carlos López", age: 35, discipline: "MMA"},
+      { id: 2, name: "Ana Pérez", age: 29, discipline: "Kick Boxing"},
     ]);
   }, []);  // Empty array ensures this runs only once, similar to componentDidMount
 
