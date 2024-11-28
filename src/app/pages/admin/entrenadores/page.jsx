@@ -78,7 +78,7 @@ export default function Entrenadores() {
     
             if (error) throw error;
             if (data && data.length > 0) {
-            setEntrenadores([...entrenadores, ...data]);
+            setEntrenadores((prev) => [...prev, ...data]);
             }
             alert("Entrenador agregado correctamente.");
         }
@@ -100,6 +100,8 @@ export default function Entrenadores() {
             const updatedEntrenadores = entrenadores.filter((_, i) => i !== selectedIndex);
             setEntrenadores(updatedEntrenadores);
             resetForm();
+            alert("Entrenador eliminado.");
+
         } catch (error) {
             console.error("Error al eliminar entrenador:", error.message);
         }
