@@ -46,7 +46,7 @@ export default NextAuth({
           return null;
         }
 
-        // Verificar la contraseña
+        // Verificar la contraseña (sin hash, solo comparación directa)
         const isPasswordValid = user.contraseña === password;
         if (!isPasswordValid) {
           console.error("Contraseña incorrecta");
