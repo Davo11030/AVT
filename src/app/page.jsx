@@ -23,7 +23,7 @@ export default function Login() {
     if (result?.error) {
       setError('Usuario o contraseña incorrectos');
     } else if (result?.url) {
-      router.push("src/app/admin"); // Cambiar ruta usando next/navigation
+      router.push("/pages/admin"); // Cambiar ruta usando next/navigation
     }
   };
 
