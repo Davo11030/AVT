@@ -79,8 +79,8 @@ export default function Entrenadores() {
             if (error) throw error;
             if (data && data.length > 0) {
             setEntrenadores([...entrenadores, ...data]);
-            alert("Entrenador agregado correctamente.");
             }
+            alert("Entrenador agregado correctamente.");
         }
         resetForm();
         } catch (error) {
