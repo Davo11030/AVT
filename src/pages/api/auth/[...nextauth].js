@@ -1,5 +1,4 @@
 import { supabase } from '@/lib/supabase'; // Ruta del cliente de Supabase
-import { compare } from 'bcryptjs'; // En lugar de 'bcrypt'
 import NextAuth from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 
@@ -16,16 +15,15 @@ export default NextAuth({
         const { username, password } = credentials;
 
         // Buscar el usuario en la tabla 'alumnos'
-        let { data, error } = await supabase
+        let { data: user, error } = await supabase
           .from('alumnos')
           .select('*')
           .eq('usuario', username)
           .single();
-        console.log(data)
 
-        if (!data) {
+        if (!user) {
           // Si no se encuentra en 'alumnos', buscar en la tabla 'entrenadores'
-          ({ data, error } = await supabase
+          ({ data: user, error } = await supabase
             .from('entrenadores')
             .select('*')
             .eq('usuario', username)
@@ -38,7 +36,7 @@ export default NextAuth({
         }
 
         // Verificar la contraseña
-        const isPasswordValid = await compare(data.contraseña, password);
+        const isPasswordValid = data.contraseña === password;
         if (isPasswordValid) {
           // Determinar el rol basado en la tabla de origen y el idrol
           let role = 'trainer'; // Valor por defecto
