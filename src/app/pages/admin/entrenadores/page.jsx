@@ -8,7 +8,6 @@ export default function Entrenadores() {
         nombre: "",
         edad: "",
         disciplina: "",
-        fechaNacimiento: "",
         telefono: "",
         usuario: "",
         contrasena: ""
@@ -59,7 +58,6 @@ export default function Entrenadores() {
             nombre: "",
             edad: "",
             disciplina: "",
-            fechaNacimiento: "",
             telefono: "",
             usuario: "",
             contrasena: ""
