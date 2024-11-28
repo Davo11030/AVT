@@ -9,7 +9,7 @@ export default function ProtectedPage() {
     async function checkSession() {
       const session = await getSession();
       if (!session) {
-        router.push('/login');
+        router.push('/page');
       }
     }
     checkSession();

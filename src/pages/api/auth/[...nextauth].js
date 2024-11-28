@@ -1,65 +1,74 @@
-import { supabase } from '@/lib/supabase'; // Ruta del cliente de Supabase
-import NextAuth from 'next-auth';
-import CredentialsProvider from 'next-auth/providers/credentials';
+import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
+import NextAuth from "next-auth";
+import CredentialsProvider from "next-auth/providers/credentials";
+import { cookies } from "next/headers";
 
+// Crear cliente de Supabase
+const createSupabaseClient = () => {
+  const cookieStore = cookies();
+  return createServerComponentClient({
+    cookies: () => cookieStore,
+  });
+};
 
 export default NextAuth({
   providers: [
     CredentialsProvider({
-      name: 'Credentials',
+      name: "Credentials",
       credentials: {
-        username: { label: 'Usuario', type: 'text' },
-        password: { label: 'Contraseña', type: 'password' },
+        username: { label: "Usuario", type: "text" },
+        password: { label: "Contraseña", type: "password" },
       },
       authorize: async (credentials) => {
+        const supabase = createSupabaseClient(); // Instancia de Supabase
         const { username, password } = credentials;
 
         // Buscar el usuario en la tabla 'alumnos'
         let { data: user, error } = await supabase
-          .from('alumnos')
-          .select('*')
-          .eq('usuario', username)
+          .from("alumnos")
+          .select("*")
+          .eq("usuario", username)
           .single();
 
         if (!user) {
           // Si no se encuentra en 'alumnos', buscar en la tabla 'entrenadores'
           ({ data: user, error } = await supabase
-            .from('entrenadores')
-            .select('*')
-            .eq('usuario', username)
+            .from("entrenadores")
+            .select("*")
+            .eq("usuario", username)
             .single());
         }
 
-        if (error || !data) {
+        if (error || !user) {
           // Si no se encontró el usuario en ambas tablas
           return null;
         }
 
         // Verificar la contraseña
-        const isPasswordValid = data.contraseña === password;
-        if (isPasswordValid) {
-          // Determinar el rol basado en la tabla de origen y el idrol
-          let role = 'trainer'; // Valor por defecto
-          if (data.idrol === 1) {
-            role = 'student';
-          } else if (data.idrol === 2) {
-            role = 'admin';
-          }
-
-          return {
-            id: data.idalumno || data.identrenador, // Usa el id correspondiente de la tabla encontrada
-            name: data.nombre,
-            role,
-          };
-        } else {
+        const isPasswordValid = user.contraseña === password;
+        if (!isPasswordValid) {
           return null; // Contraseña incorrecta
         }
+
+        // Determinar el rol basado en la tabla de origen y el idrol
+        const role =
+          user.idrol === 1
+            ? "student"
+            : user.idrol === 2
+            ? "admin"
+            : "trainer";
+
+        return {
+          id: user.idalumno || user.identrenador, // Usar el ID correspondiente
+          name: user.nombre,
+          role,
+        };
       },
     }),
   ],
-  secret:    '492dd02f1c1ca77acb56fd2a29617e635e8a71ccc9c6789cb8486ee41bfe270e',
+  secret: process.env.NEXTAUTH_SECRET, // Usa una variable de entorno para el secreto
   session: {
-    strategy: 'jwt',
+    strategy: "jwt",
     maxAge: 15 * 60, // 15 minutos de sesión
   },
   callbacks: {
@@ -79,15 +88,15 @@ export default NextAuth({
       session.role = token.role;
       return session;
     },
-    async redirect({ url, baseUrl, session }) {
-      if (session) {
-        if (session.role === 'admin') {
-          return baseUrl + '/admin';
-        } else if (session.role === 'trainer') {
-          return baseUrl + '/trainer-dashboard';
-        } else if (session.role === 'student') {
-          return baseUrl + '/student-dashboard';
-        }
+    async redirect({ url, baseUrl }) {
+      // Redirigir basado en el rol del usuario
+      const role = url.role;
+      if (role === "admin") {
+        return `${baseUrl}/admin`;
+      } else if (role === "trainer") {
+        return `${baseUrl}/trainer-dashboard`;
+      } else if (role === "student") {
+        return `${baseUrl}/student-dashboard`;
       }
       return baseUrl;
     },
