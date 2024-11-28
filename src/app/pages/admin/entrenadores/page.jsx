@@ -80,6 +80,8 @@ export default function Entrenadores() {
             if (data && data.length > 0) {
             setEntrenadores((prev) => [...prev, ...data]);
             }
+            const updatedEntrenadores = entrenadores.filter((_, i) => i !== selectedIndex);
+            setEntrenadores(updatedEntrenadores);
             alert("Entrenador agregado correctamente.");
         }
         resetForm();
