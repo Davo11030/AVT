@@ -20,10 +20,12 @@ export default NextAuth({
         password: { label: "Contraseña", type: "password" },
       },
       authorize: async (credentials) => {
-        const supabase = createSupabaseClient(); // Instancia de Supabase
+        const supabase = createSupabaseClient(); // Inicializar cliente de Supabase
         const { username, password } = credentials;
 
-        // Buscar el usuario en la tabla 'alumnos'
+        console.log("Credenciales recibidas:", credentials);
+
+        // Buscar en la tabla 'alumnos'
         let { data: user, error } = await supabase
           .from("alumnos")
           .select("*")
@@ -31,7 +33,7 @@ export default NextAuth({
           .single();
 
         if (!user) {
-          // Si no se encuentra en 'alumnos', buscar en la tabla 'entrenadores'
+          // Buscar en la tabla 'entrenadores' si no está en 'alumnos'
           ({ data: user, error } = await supabase
             .from("entrenadores")
             .select("*")
@@ -40,33 +42,36 @@ export default NextAuth({
         }
 
         if (error || !user) {
-          // Si no se encontró el usuario en ambas tablas
+          console.error("Usuario no encontrado o error en la consulta:", error);
           return null;
         }
 
         // Verificar la contraseña
         const isPasswordValid = user.contraseña === password;
         if (!isPasswordValid) {
-          return null; // Contraseña incorrecta
+          console.error("Contraseña incorrecta");
+          return null;
         }
 
-        // Determinar el rol basado en la tabla de origen y el idrol
-        const role =
-          user.idrol === 1
-            ? "student"
-            : user.idrol === 2
-            ? "admin"
-            : "trainer";
+        console.log("Usuario autenticado:", user);
+
+        // Determinar el rol basado en la tabla y el idrol
+        let role = "trainer"; // Valor por defecto
+        if (user.idrol === 1) {
+          role = "student";
+        } else if (user.idrol === 2) {
+          role = "admin";
+        }
 
         return {
-          id: user.idalumno || user.identrenador, // Usar el ID correspondiente
+          id: user.idalumno || user.identrenador,
           name: user.nombre,
           role,
         };
       },
     }),
   ],
-  secret: 'faf3d0dbe30262e1873706a79093fd3b7d302c43d5e89abad8c88a41a2a201f6', // Usa una variable de entorno para el secreto
+  secret: process.env.NEXTAUTH_SECRET, // Usa una variable de entorno para el secreto
   session: {
     strategy: "jwt",
     maxAge: 15 * 60, // 15 minutos de sesión
