@@ -1,15 +1,7 @@
-import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
+import { createClient } from '@/utils/supabase/server';
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import { cookies } from "next/headers";
 
-// Crear cliente de Supabase
-const createSupabaseClient = () => {
-  const cookieStore = cookies();
-  return createServerComponentClient({
-    cookies: () => cookieStore,
-  });
-};
 
 export default NextAuth({
   providers: [
@@ -19,11 +11,17 @@ export default NextAuth({
         username: { label: "Usuario", type: "text" },
         password: { label: "Contraseña", type: "password" },
       },
+      
       authorize: async (credentials) => {
-        const supabase = createSupabaseClient(); // Inicializar cliente de Supabase
-        const { username, password } = credentials;
-
         console.log("Credenciales recibidas:", credentials);
+      
+        const supabase = await createClient();
+        console.log("trono");
+        const { username, password } = credentials;
+      
+        // Verifica que las credenciales estén siendo recibidas correctamente
+        console.log("Username:", username);
+        console.log("Password:", password);
 
         // Buscar en la tabla 'alumnos'
         let { data: user, error } = await supabase
