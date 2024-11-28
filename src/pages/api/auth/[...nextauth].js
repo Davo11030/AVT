@@ -58,6 +58,8 @@ export default NextAuth({
       },
     }),
   ],
+  secret:
+    '492dd02f1c1ca77acb56fd2a29617e635e8a71ccc9c6789cb8486ee41bfe270e',
   session: {
     strategy: 'jwt',
     maxAge: 15 * 60, // 15 minutos de sesión
