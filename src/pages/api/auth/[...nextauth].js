@@ -21,6 +21,7 @@ export default NextAuth({
           .select('*')
           .eq('usuario', username)
           .single();
+        console.log(data)
 
         if (!data) {
           // Si no se encuentra en 'alumnos', buscar en la tabla 'entrenadores'
