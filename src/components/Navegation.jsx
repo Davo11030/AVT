@@ -1,4 +1,4 @@
-
+"use client";
 import { useEffect, useRef, useState } from "react";
 
 const TravelMenu = () => {
@@ -63,9 +63,9 @@ const TravelMenu = () => {
             <li>
               <button 
                 className="w-full text-center py-4 text-lg hover:bg-gray-200 "
-                onClick={() => handleNavigation("/playa")}
+                onClick={() => handleNavigation("pages/admin/entrenadores")}
               >
-                Playa
+                Entrenadores
               </button>
             </li>
             <li>
