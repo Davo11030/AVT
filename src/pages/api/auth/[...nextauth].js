@@ -71,7 +71,7 @@ export default NextAuth({
       },
     }),
   ],
-  secret: faf3d0dbe30262e1873706a79093fd3b7d302c43d5e89abad8c88a41a2a201f6, // Usa una variable de entorno para el secreto
+  secret: process.env.NEXTAUTH_SECRET, // Usa una variable de entorno para el secreto
   session: {
     strategy: "jwt",
     maxAge: 15 * 60, // 15 minutos de sesión
