@@ -13,16 +13,10 @@ export default NextAuth({
       },
       
       authorize: async (credentials) => {
-        console.log("Credenciales recibidas:", credentials);
       
         const supabase = await createClient();
-        console.log("trono");
         const { username, password } = credentials;
       
-        // Verifica que las credenciales estén siendo recibidas correctamente
-        console.log("Username:", username);
-        console.log("Password:", password);
-
         // Buscar en la tabla 'alumnos'
         let { data: user, error } = await supabase
           .from("alumnos")
