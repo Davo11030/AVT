@@ -110,9 +110,9 @@ export default function Entrenadores() {
                 >
                     {[
                         { label: "Nombre", name: "nombre", type: "text" },
-                        { label: "Edad", name: "edad", type: "number" },
+                        
                         { label: "Disciplina", name: "disciplina", type: "text" },
-                        { label: "Fecha de Nacimiento", name: "fechaNacimiento", type: "text" },
+                        
                         { label: "Fecha de Ingreso", name: "fechaIngreso", type: "text" },
                         { label: "Usuario", name: "usuario", type: "text" },
                         { label: "Contraseña", name: "contrasena", type: "text" }
@@ -190,29 +190,46 @@ export default function Entrenadores() {
                 >
                     Lista de Entrenadores
                 </h2>
-                {entrenadores.length === 0 ? (
-                    <p style={{ textAlign: "center", color: "#777" }}>No hay entrenadores registrados.</p>
-                ) : (
-                    <ul style={{ listStyleType: "none", padding: 0, margin: 0 }}>
-                        {entrenadores.map((entrenador, index) => (
-                            <li
-                                key={index}
-                                style={{
-                                    backgroundColor: selectedIndex === index ? "#006400" : "#808080",
-                                    padding: "10px",
-                                    borderRadius: "5px",
-                                    marginBottom: "10px",
-                                    cursor: "pointer"
-                                }}
-                                onClick={() => handleSelect(index)}
-                            >
-                                <p style={{ color: "white" }}>
-                                    <strong>Nombre:</strong> {entrenador.nombre}
-                                </p>
-                            </li>
-                        ))}
-                    </ul>
-                )}
+                <div>
+                    {entrenadores.length === 0 ? (
+                        <p style={{ textAlign: "center", color: "#777" }}>
+                            No hay entrenadores registrados.
+                        </p>
+                    ) : (
+                        <ul
+                            style={{
+                                listStyleType: "none",
+                                padding: 0,
+                                margin: 0
+                            }}
+                        >
+                            {entrenadores.map((entrenador, index) => (
+                                <li
+                                    key={index}
+                                    style={{
+                                        backgroundColor: selectedIndex === index ? "#006400" : "#808080", // Seleccionado: verde oscuro
+                                        padding: "10px",
+                                        borderRadius: "5px",
+                                        marginBottom: "10px",
+                                        display: "flex",
+                                        justifyContent: "space-between",
+                                        alignItems: "center",
+                                        cursor: "pointer"
+                                    }}
+                                    onClick={() => handleSelect(index)}
+                                >
+                                    <div style={{ color: "white" }}>
+                                        <p><strong>Nombre:</strong> {entrenador.nombre}</p>
+                                        <p><strong>Disciplina:</strong> {entrenador.disciplina}</p>
+                                        <p><strong>Ingreso:</strong> {entrenador.fechaIngreso}</p>
+                                        <p><strong>Usuario::</strong> {entrenador.usuario}</p>
+                                        <p><strong>Contraseña:</strong> {entrenador.contrasena}</p>
+                                    </div>
+                                </li>
+                            ))}
+                        </ul>
+                    )}
+                </div>
             </div>
         </div>
     );
