@@ -1,28 +1,32 @@
-'use client';
-import { signIn } from 'next-auth/react';
-import { useState } from 'react';
+"use client"; // Asegúrate de que este archivo sea un Client Component
+
+import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 export default function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState('');  // Estado para manejar el mensaje de error
+  const [error, setError] = useState('');
+  const router = useRouter(); // Cambiar navegación aquí
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    setError(''); // Limpia el mensaje de error anterior
+    setError('');
 
     const result = await signIn('credentials', {
-      redirect: false, // Evita la redirección automática
+      redirect: false,
       username,
       password,
     });
 
     if (result?.error) {
-      setError('Usuario o contraseña incorrectos'); // Mensaje de error personalizado
+      setError('Usuario o contraseña incorrectos');
     } else if (result?.url) {
-      window.location.href = '/admin'; // Redirige solo si la autenticación es exitosa
+      router.push("/admin"); // Cambiar ruta usando next/navigation
     }
   };
+
 
   return (
     <div className="flex flex-col items-center justify-center">
