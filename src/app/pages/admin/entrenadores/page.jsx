@@ -71,6 +71,7 @@ export default function Entrenadores() {
             const updatedEntrenadores = [...entrenadores];
             updatedEntrenadores[selectedIndex] = { ...formData, identrenador };
             setEntrenadores(updatedEntrenadores);
+            alert("Entrenador actualizado.");
         } else {
             // Agregar nuevo entrenador
             const { data, error } = await supabase.from("entrenadores").insert([formData]);
@@ -78,6 +79,7 @@ export default function Entrenadores() {
             if (error) throw error;
             if (data && data.length > 0) {
             setEntrenadores([...entrenadores, ...data]);
+            alert("Entrenador agregado correctamente.");
             }
         }
         resetForm();
