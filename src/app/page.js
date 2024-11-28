@@ -20,7 +20,7 @@ export default function Login() {
     if (result?.error) {
       setError('Usuario o contraseña incorrectos'); // Mensaje de error personalizado
     } else if (result?.url) {
-      window.location.href = '/pages/AdminPage'; // Redirige solo si la autenticación es exitosa
+      window.location.href = '/admin'; // Redirige solo si la autenticación es exitosa
     }
   };
 
