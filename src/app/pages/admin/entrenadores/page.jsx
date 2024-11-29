@@ -47,48 +47,56 @@ export default function Entrenadores() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         const { nombre, disciplina, telefono, usuario, contraseña } = formData;
+    
+        // Validaciones
         if (!/^\d+$/.test(telefono)) {
             alert("El número de teléfono debe contener solo dígitos.");
             return;
         }
         if (!nombre || !disciplina || !telefono || !usuario || !contraseña) {
-        alert("Por favor, completa todos los campos obligatorios.");
-        return;
+            alert("Por favor, completa todos los campos obligatorios.");
+            return;
         }
     
         try {
-        const supabase = await createClient();
-        if (selectedIndex !== null) {
-            // Actualizar entrenador existente
-            const identrenador = entrenadores[selectedIndex].identrenador;
-            const { error } = await supabase
-            .from("entrenadores")
-            .update(formData)
-            .eq("identrenador", identrenador);
+            const supabase = await createClient();
     
-            if (error) throw error;
+            if (selectedIndex !== null) {
+                // Actualizar entrenador existente
+                const identrenador = entrenadores[selectedIndex].identrenador;
+                const { error } = await supabase
+                    .from("entrenadores")
+                    .update(formData)
+                    .eq("identrenador", identrenador);
     
-            const updatedEntrenadores = [...entrenadores];
-            updatedEntrenadores[selectedIndex] = { ...formData, identrenador };
-            setEntrenadores(updatedEntrenadores);
-            alert("Entrenador actualizado.");
-        } else {
-            // Agregar nuevo entrenador
-            const { data, error } = await supabase.from("entrenadores").insert([formData]);
+                if (error) throw error;
     
-            if (error) throw error;
-            if (data && data.length > 0) {
-            setEntrenadores((prev) => [...prev, ...data]);
+                const updatedEntrenadores = [...entrenadores];
+                updatedEntrenadores[selectedIndex] = { ...formData, identrenador };
+                setEntrenadores(updatedEntrenadores);
+                alert("Entrenador actualizado.");
+            } else {
+                // Agregar nuevo entrenador
+                const { error } = await supabase.from("entrenadores").insert([formData]);
+
+                if (error) throw error;
+
+                // Como Supabase no devuelve los datos insertados, creamos el nuevo objeto manualmente
+                const newEntrenador = { ...formData, identrenador: Date.now() };  // Usamos Date.now() como ejemplo de ID único
+
+                // Actualizamos el estado local de entrenadores
+                setEntrenadores((prevEntrenadores) => [...prevEntrenadores, newEntrenador]);
+
+                alert("Entrenador agregado correctamente.");
+                                
             }
-            const updatedEntrenadores = entrenadores.filter((_, i) => i !== selectedIndex);
-            setEntrenadores(updatedEntrenadores);
-            alert("Entrenador agregado correctamente.");
-        }
-        resetForm();
+    
+            resetForm();
         } catch (error) {
-        console.error("Error al guardar entrenador:", error.message);
+            console.error("Error al guardar entrenador:", error.message);
         }
     };
+    
     
 
     const handleDelete = async () => {
