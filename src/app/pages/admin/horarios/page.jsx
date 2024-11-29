@@ -1,7 +1,6 @@
-"use client";
-
-import { useState } from "react";
-import { useClases } from "../../../../context/ClasesContext"; // Asegúrate de que la ruta sea correcta
+'use client'
+import { useState, useEffect } from "react";
+import { useClases } from "../../../../context/ClasesContext";
 
 export default function AdminPage() {
   const { clases, agregarClase, eliminarClase } = useClases();
@@ -13,15 +12,38 @@ export default function AdminPage() {
   });
   const [selectedIndex, setSelectedIndex] = useState(null);
 
+  useEffect(() => {
+    if (selectedIndex !== null && clases[selectedIndex]) {
+      setFormData({
+        nombre: clases[selectedIndex].nombre,
+        hora: clases[selectedIndex].hora,
+        dias: clases[selectedIndex].dias,
+        identrenador: clases[selectedIndex].identrenador,
+      });
+    } else {
+      setFormData({
+        nombre: "",
+        hora: "",
+        dias: "",
+        identrenador: "",
+      });
+    }
+  }, [selectedIndex, clases]);
+
+  // Maneja el cambio de los campos del formulario
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const { nombre, hora, dias, identrenador } = formData;
 
-    // Validación para asegurar que todos los campos estén completos
+    // Validación más detallada
     if (!nombre || !hora || !dias || !identrenador) {
       alert("Por favor, completa todos los campos obligatorios.");
       return;
@@ -32,27 +54,27 @@ export default function AdminPage() {
       const updatedClases = [...clases];
       updatedClases[selectedIndex] = formData;
       agregarClase(updatedClases);  // Actualiza en el contexto
-      setSelectedIndex(null);
+      setSelectedIndex(null);  // Reseteamos el índice seleccionado
     } else {
       // Agregar una nueva clase
-      agregarClase([...clases, formData]);
+      agregarClase(formData);  // Solo se agrega la nueva clase
     }
     resetForm();
   };
 
   const handleDelete = () => {
     if (selectedIndex !== null) {
+      // Eliminar la clase seleccionada
       const updatedClases = clases.filter((_, i) => i !== selectedIndex);
       eliminarClase(updatedClases);  // Eliminar en el contexto
-      resetForm();
+      resetForm();  // Limpiar formulario
     } else {
       alert("Selecciona una clase para eliminar.");
     }
   };
 
   const handleSelect = (index) => {
-    setFormData(clases[index]);
-    setSelectedIndex(index);
+    setSelectedIndex(index); // Establecer el índice de la clase seleccionada
   };
 
   const resetForm = () => {
@@ -62,7 +84,7 @@ export default function AdminPage() {
       dias: "",
       identrenador: "",
     });
-    setSelectedIndex(null);
+    setSelectedIndex(null);  // Limpiar la selección
   };
 
   const styles = {
@@ -159,7 +181,7 @@ export default function AdminPage() {
                 id={field.name}
                 type={field.type}
                 name={field.name}
-                value={formData[field.name]}
+                value={formData[field.name] || ""} // Se asegura de que siempre haya un valor
                 onChange={handleChange}
                 placeholder={field.placeholder || ""}
                 style={styles.input}
