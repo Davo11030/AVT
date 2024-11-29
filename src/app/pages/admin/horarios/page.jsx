@@ -1,6 +1,7 @@
 'use client'
 import { useState, useEffect } from "react";
 import { useClases } from "../../../../context/ClasesContext";
+import TravelMenu from '@/components/Navegation';
 
 export default function AdminPage() {
   const { clases, agregarClase, eliminarClase } = useClases();
@@ -30,7 +31,6 @@ export default function AdminPage() {
     }
   }, [selectedIndex, clases]);
 
-  // Maneja el cambio de los campos del formulario
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
@@ -43,38 +43,34 @@ export default function AdminPage() {
     e.preventDefault();
     const { nombre, hora, dias, identrenador } = formData;
 
-    // Validación más detallada
     if (!nombre || !hora || !dias || !identrenador) {
       alert("Por favor, completa todos los campos obligatorios.");
       return;
     }
 
     if (selectedIndex !== null) {
-      // Actualizar una clase existente
       const updatedClases = [...clases];
       updatedClases[selectedIndex] = formData;
-      agregarClase(updatedClases);  // Actualiza en el contexto
-      setSelectedIndex(null);  // Reseteamos el índice seleccionado
+      agregarClase(updatedClases);
+      setSelectedIndex(null);
     } else {
-      // Agregar una nueva clase
-      agregarClase(formData);  // Solo se agrega la nueva clase
+      agregarClase(formData);
     }
     resetForm();
   };
 
   const handleDelete = () => {
     if (selectedIndex !== null) {
-      // Eliminar la clase seleccionada
       const updatedClases = clases.filter((_, i) => i !== selectedIndex);
-      eliminarClase(updatedClases);  // Eliminar en el contexto
-      resetForm();  // Limpiar formulario
+      eliminarClase(updatedClases);
+      resetForm();
     } else {
       alert("Selecciona una clase para eliminar.");
     }
   };
 
   const handleSelect = (index) => {
-    setSelectedIndex(index); // Establecer el índice de la clase seleccionada
+    setSelectedIndex(index);
   };
 
   const resetForm = () => {
@@ -84,20 +80,27 @@ export default function AdminPage() {
       dias: "",
       identrenador: "",
     });
-    setSelectedIndex(null);  // Limpiar la selección
+    setSelectedIndex(null);
   };
 
   const styles = {
     container: {
       display: "flex",
-      justifyContent: "space-between",
-      alignItems: "flex-start",
+      flexDirection: "column",
       height: "100vh",
       backgroundColor: "#c4c4c4",
-      padding: "10px",
-      boxSizing: "border-box",
       fontFamily: "Arial, sans-serif",
       overflow: "hidden",
+    },
+    navigation: {
+      marginBottom: "10px",
+    },
+    content: {
+      display: "flex",
+      justifyContent: "space-between",
+      alignItems: "flex-start",
+      height: "100%",
+      padding: "10px",
     },
     formContainer: {
       width: "40%",
@@ -115,16 +118,13 @@ export default function AdminPage() {
       borderRadius: "10px",
       boxShadow: "0 4px 6px rgba(0, 0, 0, 0.2)",
       overflowY: "auto",
-      maxHeight: "100%",
     },
     listItem: (selected) => ({
       backgroundColor: selected ? "#006400" : "#808080",
       padding: "10px",
       borderRadius: "5px",
       marginBottom: "10px",
-      display: "flex",
-      justifyContent: "space-between",
-      alignItems: "center",
+      color: "white",
       cursor: "pointer",
     }),
     button: (color) => ({
@@ -142,82 +142,73 @@ export default function AdminPage() {
       color: "white",
       fontSize: "18px",
     },
-    formLabel: {
-      color: "white",
-      fontSize: "14px",
-    },
     input: {
       width: "100%",
       padding: "8px",
       borderRadius: "5px",
       border: "1px solid #ccc",
       marginTop: "5px",
-      color: "black",
     },
   };
 
   return (
     <div style={styles.container}>
-      {/* Contenedor del formulario */}
-      <div style={styles.formContainer}>
-        <h2 style={styles.heading}>Gestionar Clases</h2>
-        <form
-          onSubmit={handleSubmit}
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            gap: "10px",
-          }}
-        >
-          {[
-            { label: "Nombre de la clase", name: "nombre", type: "text" },
-            { label: "ID del entrenador", name: "identrenador", type: "text" },
-            { label: "Hora", name: "hora", type: "time" },
-            { label: "Días", name: "dias", type: "text", placeholder: "Ejemplo: Lunes, Miércoles, Viernes" },
-          ].map((field, index) => (
-            <label htmlFor={field.name} key={index} style={styles.formLabel}>
-              {field.label}:
-              <input
-                id={field.name}
-                type={field.type}
-                name={field.name}
-                value={formData[field.name] || ""} // Se asegura de que siempre haya un valor
-                onChange={handleChange}
-                placeholder={field.placeholder || ""}
-                style={styles.input}
-                required
-              />
-            </label>
-          ))}
-          <button type="submit" style={styles.button("#008000")}>
-            {selectedIndex !== null ? "Actualizar" : "Agregar"}
-          </button>
-          <button type="button" onClick={handleDelete} style={styles.button("#dc3545")}>
-            Eliminar
-          </button>
-        </form>
+      {/* Navegación */}
+      <div style={styles.navigation}>
+        <TravelMenu />
       </div>
 
-      {/* Contenedor de la lista */}
-      <div style={styles.listContainer}>
-        <h2 style={{ ...styles.heading, color: "#333" }}>Lista de Clases</h2>
-        <div>
+      {/* Contenido principal */}
+      <div style={styles.content}>
+        {/* Contenedor del formulario */}
+        <div style={styles.formContainer}>
+          <h2 style={styles.heading}>Gestionar Clases</h2>
+          <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+            {[
+              { label: "Nombre de la clase", name: "nombre", type: "text" },
+              { label: "ID del entrenador", name: "identrenador", type: "text" },
+              { label: "Hora", name: "hora", type: "time" },
+              { label: "Días", name: "dias", type: "text", placeholder: "Ejemplo: Lunes, Miércoles, Viernes" },
+            ].map((field, index) => (
+              <label key={index}>
+                {field.label}:
+                <input
+                  type={field.type}
+                  name={field.name}
+                  value={formData[field.name]}
+                  onChange={handleChange}
+                  placeholder={field.placeholder || ""}
+                  style={styles.input}
+                  required
+                />
+              </label>
+            ))}
+            <button type="submit" style={styles.button("#008000")}>
+              {selectedIndex !== null ? "Actualizar" : "Agregar"}
+            </button>
+            <button type="button" onClick={handleDelete} style={styles.button("#dc3545")}>
+              Eliminar
+            </button>
+          </form>
+        </div>
+
+        {/* Contenedor de la lista */}
+        <div style={styles.listContainer}>
+          <h2 style={styles.heading}>Lista de Clases</h2>
           {clases.length === 0 ? (
-            <p style={{ textAlign: "center", color: "#777" }}>No hay clases registradas.</p>
+            <p>No hay clases registradas.</p>
           ) : (
-            <ul style={{ listStyleType: "none", padding: 0, margin: 0 }}>
+            <ul style={{ listStyleType: "none", padding: 0 }}>
               {clases.map((clase, index) => (
                 <li
                   key={index}
                   style={styles.listItem(selectedIndex === index)}
                   onClick={() => handleSelect(index)}
                 >
-                  <div style={{ color: "white" }}>
-                    <p><strong>Nombre:</strong> {clase.nombre}</p>
-                    <p><strong>ID del entrenador:</strong> {clase.identrenador}</p>
-                    <p><strong>Hora:</strong> {clase.hora}</p>
-                    <p><strong>Días:</strong> {clase.dias}</p>
-                  </div>
+                  <p><strong>Nombre:</strong> {clase.nombre}</p>
+                  <p><strong>ID del entrenador:</strong> {clase.identrenador}</p>
+                  <p><strong>Hora:</strong> {clase.hora}</p>
+                  <p><strong>Días:</strong> {clase.dias}</p>
                 </li>
               ))}
             </ul>

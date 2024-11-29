@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import TravelMenu from '@/components/Navegation'
 
 export default function Alumnos() {
     const [alumnos, setAlumnos] = useState([]);
@@ -129,6 +130,9 @@ export default function Alumnos() {
 
     return (
         <div style={styles.container}>
+            <div style={styles.navigation}>
+                <TravelMenu />
+             </div>
             {/* Contenedor del formulario */}
             <div style={styles.formContainer}>
                 <h2 style={{ textAlign: "center", marginBottom: "15px", color: "white", fontSize: "18px" }}>
