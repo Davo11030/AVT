@@ -1,9 +1,12 @@
+'use client'
 import React from 'react';
-import ScheduleCard from '../components/ScheduleCard';
-import UserProfile from '../components/UserProfile';
+import ScheduleCard from '../../../../components/ScheduleCard';
+import TravelMenu from '@/components/NavegationAlumno';
+import UserProfile from '../../../../components/UserProfile';
 
 const ProfilePage = () => (
   <div className="p-6">
+    <TravelMenu />
     <UserProfile name="Juan Pérez" age="30" discipline="MMA" />
     <div className="mt-6 space-y-4">
       <ScheduleCard

@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useClases } from "../../../../context/ClasesContext"; // Usamos el hook del contexto
+import TravelMenu from '@/components/NavegationAlumno';
 
 export default function StudentPage() {
     const { clases } = useClases(); // Accedemos a las clases desde el contexto
@@ -82,6 +83,7 @@ export default function StudentPage() {
     return (
         <div style={styles.container}>
             <h2 style={styles.title}>Alumno: Ver Clases Disponibles</h2>
+            <TravelMenu />
             <ul>
                 {clases.length === 0 ? (
                     <p style={{ color: "#fff" }}>No hay clases disponibles.</p>
