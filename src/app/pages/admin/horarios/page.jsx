@@ -7,7 +7,8 @@ export default function Clases() {
     const [formData, setFormData] = useState({
         nombre: "",
         hora: "",
-        dias: ""
+        dias: "",
+        identrenador: ""
     });
     const [selectedIndex, setSelectedIndex] = useState(null);
 
@@ -17,19 +18,22 @@ export default function Clases() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        const { nombre, hora, dias } = formData;
+        const { nombre, hora, dias, identrenador } = formData;
 
-        if (!nombre || !hora || !dias) {
+        // Validación para asegurar que todos los campos estén completos
+        if (!nombre || !hora || !dias || !identrenador) {
             alert("Por favor, completa todos los campos obligatorios.");
             return;
         }
 
         if (selectedIndex !== null) {
+            // Actualizar una clase existente
             const updatedClases = [...clases];
             updatedClases[selectedIndex] = formData;
             setClases(updatedClases);
             setSelectedIndex(null);
         } else {
+            // Agregar una nueva clase
             setClases([...clases, formData]);
         }
         resetForm();
@@ -54,7 +58,8 @@ export default function Clases() {
         setFormData({
             nombre: "",
             hora: "",
-            dias: ""
+            dias: "",
+            identrenador: ""
         });
         setSelectedIndex(null);
     };
@@ -127,6 +132,7 @@ export default function Clases() {
                 >
                     {[
                         { label: "Nombre de la clase", name: "nombre", type: "text" },
+                        { label: "ID del entrenador", name: "identrenador", type: "text" },
                         { label: "Hora", name: "hora", type: "time" },
                         { label: "Días", name: "dias", type: "text", placeholder: "Ejemplo: Lunes, Miércoles, Viernes" }
                     ].map((field, index) => (
@@ -178,6 +184,7 @@ export default function Clases() {
                                 >
                                     <div style={{ color: "white" }}>
                                         <p><strong>Nombre:</strong> {clase.nombre}</p>
+                                        <p><strong>ID del entrenador:</strong> {clase.identrenador}</p>
                                         <p><strong>Hora:</strong> {clase.hora}</p>
                                         <p><strong>Días:</strong> {clase.dias}</p>
                                     </div>

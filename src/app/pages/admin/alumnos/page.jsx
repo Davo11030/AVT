@@ -6,7 +6,7 @@ export default function Alumnos() {
     const [alumnos, setAlumnos] = useState([]);
     const [formData, setFormData] = useState({
         nombre: "",
-        fechaNacimiento: "",
+        fecha_nacimiento: "",
         telefono: "",
         usuario: "",
         contrasena: ""
@@ -19,19 +19,22 @@ export default function Alumnos() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        const { nombre, fechaNacimiento, telefono, usuario, contrasena } = formData;
+        const { nombre, fecha_nacimiento, telefono, usuario, contrasena } = formData;
 
-        if (!nombre || !fechaNacimiento || !telefono || !usuario || !contrasena) {
-            alert("Por favor, completa todos los campos obligatorios.");
+        // Validación para asegurar que todos los campos estén completos
+        if (!nombre || !fecha_nacimiento || !telefono || !usuario || !contrasena) {
+            alert("Por favor, completa todos los campos.");
             return;
         }
 
         if (selectedIndex !== null) {
+            // Actualizar un alumno existente
             const updatedAlumnos = [...alumnos];
             updatedAlumnos[selectedIndex] = formData;
             setAlumnos(updatedAlumnos);
             setSelectedIndex(null);
         } else {
+            // Agregar un nuevo alumno
             setAlumnos([...alumnos, formData]);
         }
         resetForm();
@@ -55,7 +58,7 @@ export default function Alumnos() {
     const resetForm = () => {
         setFormData({
             nombre: "",
-            fechaNacimiento: "",
+            fecha_nacimiento: "",
             telefono: "",
             usuario: "",
             contrasena: ""
@@ -84,7 +87,7 @@ export default function Alumnos() {
             overflowY: "auto",
             maxHeight: "90vh"
         },
-        listContainer: {
+        tableContainer: {
             width: "55%",
             backgroundColor: "#c4c4c4",
             padding: "15px",
@@ -93,16 +96,6 @@ export default function Alumnos() {
             overflowY: "auto",
             maxHeight: "100%"
         },
-        listItem: (selected) => ({
-            backgroundColor: selected ? "#006400" : "#808080",
-            padding: "10px",
-            borderRadius: "5px",
-            marginBottom: "10px",
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            cursor: "pointer"
-        }),
         button: (color) => ({
             padding: "10px",
             backgroundColor: color,
@@ -111,7 +104,27 @@ export default function Alumnos() {
             borderRadius: "5px",
             cursor: "pointer",
             marginTop: "10px"
-        })
+        }),
+        table: {
+            width: "100%",
+            borderCollapse: "collapse",
+            textAlign: "left"
+        },
+        th: {
+            backgroundColor: "#808080",
+            color: "white",
+            padding: "10px",
+            border: "1px solid #ccc"
+        },
+        td: {
+            padding: "10px",
+            border: "1px solid #ccc",
+            backgroundColor: "#f8f8f8"
+        },
+        selectedRow: {
+            backgroundColor: "#006400",
+            color: "white"
+        }
     };
 
     return (
@@ -131,15 +144,14 @@ export default function Alumnos() {
                 >
                     {[
                         { label: "Nombre del alumno", name: "nombre", type: "text" },
-                        { label: "Fecha de nacimiento", name: "fechaNacimiento", type: "date" },
+                        { label: "Fecha de nacimiento", name: "fecha_nacimiento", type: "date" },
                         { label: "Teléfono", name: "telefono", type: "text" },
                         { label: "Usuario", name: "usuario", type: "text" },
                         { label: "Contraseña", name: "contrasena", type: "password" }
                     ].map((field, index) => (
-                        <label htmlFor={field.name} key={index} style={{ color: "white", fontSize: "14px" }}>
+                        <label key={index} style={{ color: "white", fontSize: "14px" }}>
                             {field.label}:
                             <input
-                                id={field.name}
                                 type={field.type}
                                 name={field.name}
                                 value={formData[field.name]}
@@ -165,34 +177,41 @@ export default function Alumnos() {
                 </form>
             </div>
 
-            {/* Contenedor de la lista */}
-            <div style={styles.listContainer}>
+            {/* Contenedor de la tabla */}
+            <div style={styles.tableContainer}>
                 <h2 style={{ textAlign: "center", marginBottom: "10px", color: "#333", fontSize: "18px" }}>
                     Lista de Alumnos
                 </h2>
-                <div>
-                    {alumnos.length === 0 ? (
-                        <p style={{ textAlign: "center", color: "#777" }}>No hay alumnos registrados.</p>
-                    ) : (
-                        <ul style={{ listStyleType: "none", padding: 0, margin: 0 }}>
+                {alumnos.length === 0 ? (
+                    <p style={{ textAlign: "center", color: "#777" }}>No hay alumnos registrados.</p>
+                ) : (
+                    <table style={styles.table}>
+                        <thead>
+                            <tr>
+                                {Object.keys(formData).map((key, index) => (
+                                    <th key={index} style={styles.th}>
+                                        {key.charAt(0).toUpperCase() + key.slice(1).replace("_", " ")}
+                                    </th>
+                                ))}
+                            </tr>
+                        </thead>
+                        <tbody>
                             {alumnos.map((alumno, index) => (
-                                <li
+                                <tr
                                     key={index}
-                                    style={styles.listItem(selectedIndex === index)}
+                                    style={selectedIndex === index ? styles.selectedRow : {}}
                                     onClick={() => handleSelect(index)}
                                 >
-                                    <div style={{ color: "white" }}>
-                                        <p><strong>Nombre:</strong> {alumno.nombre}</p>
-                                        <p><strong>Fecha de nacimiento:</strong> {alumno.fechaNacimiento}</p>
-                                        <p><strong>Teléfono:</strong> {alumno.telefono}</p>
-                                        <p><strong>Usuario:</strong> {alumno.usuario}</p>
-                                        <p><strong>Contraseña:</strong> {alumno.contrasena}</p>
-                                    </div>
-                                </li>
+                                    {Object.values(alumno).map((value, index) => (
+                                        <td key={index} style={styles.td}>
+                                            {value}
+                                        </td>
+                                    ))}
+                                </tr>
                             ))}
-                        </ul>
-                    )}
-                </div>
+                        </tbody>
+                    </table>
+                )}
             </div>
         </div>
     );
