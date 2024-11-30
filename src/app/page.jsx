@@ -89,6 +89,7 @@ export default function Login() {
           </button>
         </form>
       </div>
+      <div className=" h-60"></div>
       <footer className="bg-gray-400 text-white text-center py-4 w-full">
       <p className="text-sm">
             © 2024 AVT WARRIORS. Todos los derechos reservados.
