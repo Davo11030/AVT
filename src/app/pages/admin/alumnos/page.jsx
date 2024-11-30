@@ -138,10 +138,10 @@ export default function Alumnos() {
     };
 
     return (
-        <div className="flex flex-col md:flex-row justify-between items-start h-screen bg-gray-300 p-4 space-y-4 md:space-y-0">
+        <div className="flex flex-col md:flex-row h-screen bg-gray-300 ">
         {/* Formulario */}
         <TravelMenu/>
-        <div className="w-full md:w-2/5 bg-gray-400  text-white p-6 rounded-lg shadow-lg">
+        <div className="w-full md:w-2/5 bg-gray-400  text-white p-6 rounded-lg shadow-lg md:sticky md:top-0 h-fit ">
 
             <h2 className="text-center text-xl font-bold mb-4">Alumnos</h2>
             <form onSubmit={handleSubmit} className="flex flex-col space-y-4">
@@ -184,7 +184,7 @@ export default function Alumnos() {
         </div>
 
         {/* Lista */}
-        <div className="w-full md:w-3/5 bg-gray-200 p-6 rounded-lg shadow-lg">
+        <div className="w-full md:w-3/5 bg-gray-200 p-6 rounded-lg shadow-lg overflow-y-auto">
             <h2 className="text-center text-xl font-bold mb-4">Lista de Alumnos</h2>
             <div>
             {alumnos.length === 0 ? (
