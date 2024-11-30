@@ -8,7 +8,7 @@ const LoginPage = () => {
       <main className="flex-grow flex justify-center items-center">
         <LoginForm />
       </main>
-
+      <Footer/>
     </div>
   );
 };

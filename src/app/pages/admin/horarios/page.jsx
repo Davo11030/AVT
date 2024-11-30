@@ -1,6 +1,7 @@
 "use client";
 import { createClient } from "@/utils/supabase/server";
 import { useEffect, useState } from "react";
+import TravelMenu from "@/components/Navegation";
 
 export default function AdminPage() {
   const [clases, setClases] = useState([]);
@@ -135,9 +136,10 @@ export default function AdminPage() {
   };
 
   return (
-    <div className="flex justify-between items-start h-screen bg-gray-200 p-5 font-sans">
+    <div className="flex justify-between items-start h-screen bg-gray-300 p-5 font-sans">
       {/* Contenedor del formulario */}
-      <div className="w-2/5 bg-gray-700 p-5 rounded-lg shadow-lg max-h-[90vh] overflow-auto">
+      <TravelMenu/>
+      <div className="w-2/5 bg-gray-400 p-5 rounded-lg shadow-lg max-h-[90vh] overflow-auto">
         <h2 className="text-white text-center mb-4 text-lg font-semibold">Gestionar Clases</h2>
         <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
           <div>
@@ -230,7 +232,7 @@ export default function AdminPage() {
               <li
                 key={index}
                 className={`p-4 rounded-lg ${
-                  selectedIndex === index ? "bg-green-600 text-white" : "bg-gray-700 text-white"
+                  selectedIndex === index ? "bg-green-600 text-white" : "bg-white text-black"
                 } cursor-pointer`}
                 onClick={() => handleSelect(index)}
               >
