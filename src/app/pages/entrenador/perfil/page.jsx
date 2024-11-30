@@ -43,9 +43,9 @@ export default function TrainerPage() {
   if (!userData || userData.length === 0) return <p>No se encontraron datos para este usuario.</p>;
 
   return (
-    <div className="p-6 bg-gray-100 min-h-screen">
+    <div className="p-6 bg-gray-400 min-h-screen">
       <TravelMenu />
-      <div className="p-6 bg-white rounded-lg shadow-md max-w-3xl mx-auto mt-8">
+      <div className="p-6 bg-gray-200 rounded-lg shadow-md max-w-3xl mx-auto mt-8">
         <h2 className="text-2xl font-semibold text-center text-gray-800">Hola  {session.name}</h2>
 
         <h3 className="mt-6 text-xl font-semibold text-center text-gray-700">Datos del entrenador:</h3>
