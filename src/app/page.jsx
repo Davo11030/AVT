@@ -60,7 +60,7 @@ export default function Login() {
         )}
         <form onSubmit={handleLogin} className="space-y-6">
           <div>
-            <label className="block text-gray-600">Usuario:</label>
+            <label className="block text-gray-400">Usuario:</label>
             <input
               type="text"
               placeholder=""
