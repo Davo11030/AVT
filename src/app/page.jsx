@@ -21,9 +21,24 @@ export default function Login() {
     });
 
     if (result?.error) {
-      setError('Usuario o contraseña incorrectos');
-    } else if (result?.url) {
-      router.push("/pages/admin/entrenadores"); // Cambiar ruta usando next/navigation
+      setError('Usuario o contraseña incorrectosss');
+    } else {
+      // Obtener la sesión para acceder al rol
+      const session = await fetch('/api/auth/session').then((res) => res.json());
+      console.log("Sesión obtenida:", session);
+
+      const role = session?.role; // Extraer el rol del usuario
+
+      // Redirigir basado en el rol
+      if (role === 'admin') {
+        router.push('/pages/admin/entrenadores');
+      } else if (role === 'trainer') {
+        router.push('/pages/entrenador/perfil');
+      } else if (role === 'student') {
+        router.push('/pages/alumnos/perfil');
+      } else {
+        router.push('/'); // Redirigir al home por defecto
+      }
     }
   };
 

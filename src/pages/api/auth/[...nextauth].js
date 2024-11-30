@@ -48,7 +48,7 @@ export default NextAuth({
         console.log("Usuario autenticado:", user);
 
         // Determinar el rol basado en la tabla y el idrol
-        let role = "trainer"; // Valor por defecto
+        let role = "trainer"
         if (user.idrol === 1) {
           role = "student";
         } else if (user.idrol === 2) {
@@ -58,7 +58,7 @@ export default NextAuth({
         return {
           id: user.idalumno || user.identrenador,
           name: user.nombre,
-          role,
+          role: role
         };
       },
     }),
@@ -83,19 +83,9 @@ export default NextAuth({
       session.id = token.id;
       session.name = token.name;
       session.role = token.role;
+      console.log("imprimiendo session:", session)
       return session;
     },
-    async redirect({ url, baseUrl }) {
-      // Redirigir basado en el rol del usuario
-      const role = url.role;
-      if (role === "admin") {
-        return `${baseUrl}/admin`;
-      } else if (role === "trainer") {
-        return `${baseUrl}/trainer-dashboard`;
-      } else if (role === "student") {
-        return `${baseUrl}/student-dashboard`;
-      }
-      return baseUrl;
-    },
-  },
+    
+  }
 });

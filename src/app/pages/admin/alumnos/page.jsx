@@ -2,6 +2,7 @@
 
 import TravelMenu from '@/components/Navegation';
 import { createClient } from "@/utils/supabase/server";
+
 import { useEffect, useState } from "react";
 
 export default function Alumnos() {

@@ -56,7 +56,7 @@ const TravelMenu = () => {
             <li>
               <button
                 className="w-full text-center py-4 text-lg hover:bg-gray-200 text-black"
-                onClick={() => handleNavigation("/pages/alumnos/perfil")}
+                onClick={() => handleNavigation("/pages/entrenador/perfil")}
               >
                 Perfil
               </button>
@@ -64,7 +64,7 @@ const TravelMenu = () => {
             <li>
               <button
                 className="w-full text-center py-4 text-lg hover:bg-gray-200 text-black"
-                onClick={() => handleNavigation("/pages/alumnos/clases")}
+                onClick={() => handleNavigation("/pages/entrenador/clases")}
               >
                 Clases
               </button>

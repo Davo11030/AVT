@@ -1,7 +1,7 @@
 "use client";
+import TravelMenu from "@/components/Navegation";
 import { createClient } from "@/utils/supabase/server";
 import { useEffect, useState } from "react";
-import TravelMenu from "@/components/Navegation";
 
 export default function AdminPage() {
   const [clases, setClases] = useState([]);

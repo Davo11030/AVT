@@ -77,6 +77,14 @@ const TravelMenu = () => {
                 Alumnos
               </button>
             </li>
+            <li>
+              <button
+                className="w-full text-center py-4 text-lg hover:bg-gray-200 text-black"
+                onClick={() => handleNavigation("/")}
+              >
+                Cerrar sesion
+              </button>
+            </li>
           </ul>
         </div>
       )}
