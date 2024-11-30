@@ -77,21 +77,26 @@ export default function Login() {
               placeholder=""
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full px-3 py-3 bg-[#707070] rounded-full text-white focus:outline-none"
+              className="w-full px-3 py-3 bg-gray-400 rounded-full text-white focus:outline-none"
               required
             />
           </div>
           <button
             type="submit"
-            className="w-full bg-[#707070] text-white py-3 rounded-full hover:bg-gray-700 transition"
+            className="w-full bg-gray-400 text-white py-3 rounded-full hover:bg-gray-700 transition"
           >
             Entrar
           </button>
         </form>
       </div>
+      <footer className="bg-gray-400 text-white text-center py-4">
+      <p className="text-sm">
+            © 2024 AVT WARRIORS. Todos los derechos reservados.
+        </p>
+      </footer>
 
-      {/* Barra inferior */}
-      <div className="w-full bg-[#707070] py-9"></div>
+
       </div>
+      
   );
 }
