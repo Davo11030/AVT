@@ -183,7 +183,7 @@ export default function Entrenadores() {
         </div>
 
         {/* Lista */}
-        <div className="w-full md:w-3/5 bg-gray-200 p-6 rounded-lg shadow-lg overflow-y-auto">
+        <div className="w-full md:w-3/5 bg-gray-200 p-2 rounded-lg shadow-lg overflow-y-auto">
             <h2 className="text-center text-xl font-bold mb-4">Lista de Entrenadores</h2>
             <div>
             {entrenadores.length === 0 ? (
