@@ -140,10 +140,10 @@ export default function Entrenadores() {
         <div className="flex flex-col md:flex-row h-screen bg-gray-300">
         {/* Formulario */}
         <TravelMenu/>
-        <div className="w-full md:w-2/5 bg-gray-400  text-white p-2 rounded-lg shadow-lg md:sticky md:top-0 h-fit">
+        <div className="w-full md:w-2/5 bg-gray-400  text-white p-6 rounded-lg shadow-lg md:sticky md:top-0 h-fit">
 
             <h2 className="text-center text-xl font-bold mb-4">Entrenadores</h2>
-            <form onSubmit={handleSubmit} className="flex flex-col space-y-2">
+            <form onSubmit={handleSubmit} className="flex flex-col space-y-3">
             {[
                 { label: "Nombre", name: "nombre", type: "text" },
                 { label: "Disciplina", name: "disciplina", type: "text" },
