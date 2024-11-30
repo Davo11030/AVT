@@ -60,13 +60,13 @@ export default function Login() {
         )}
         <form onSubmit={handleLogin} className="space-y-6">
           <div>
-            <label className="block text-gray-400">Usuario:</label>
+            <label className="block text-gray-600">Usuario:</label>
             <input
               type="text"
               placeholder=""
               value={username}
               onChange={(e) => setUsername(e.target.value)}
-              className="w-full px-3 py-3 bg-[#707070] rounded-full text-white focus:outline-none"
+              className="w-full px-3 py-3 bg-gray-400 rounded-full text-white focus:outline-none"
               required
             />
           </div>
