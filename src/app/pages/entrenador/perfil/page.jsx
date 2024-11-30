@@ -43,20 +43,20 @@ export default function TrainerPage() {
   if (!userData || userData.length === 0) return <p>No se encontraron datos para este usuario.</p>;
 
   return (
-    <div className="p-6">
+    <div className="p-6 bg-gray-100 min-h-screen">
       <TravelMenu />
-      <div className="p-6 bg-white rounded-lg shadow-md max-w-md mx-auto">
-        <h2 className="text-xl font-semibold text-center">Hola  {session.name}</h2>
+      <div className="p-6 bg-white rounded-lg shadow-md max-w-3xl mx-auto mt-8">
+        <h2 className="text-2xl font-semibold text-center text-gray-800">Hola  {session.name}</h2>
 
-        <h3 className="mt-4 text-lg font-semibold text-center">Datos del entrenador:</h3>
-        <ul className="mt-2">
+        <h3 className="mt-6 text-xl font-semibold text-center text-gray-700">Datos del entrenador:</h3>
+        <ul className="mt-4 space-y-4">
         {userData.map((item) => (
             <li key={item.identrenador} className="text-gray-700">
             <p><strong>Nombre:</strong> {item.nombre}</p>
             <p><strong>Disciplina:</strong> {item.disciplina}</p> {/* Añadido el campo disciplina */}
             <p><strong>Teléfono:</strong> {item.telefono}</p>
             <p><strong>Usuario:</strong> {item.usuario}</p>
-            <hr className="my-2" />
+            <hr className="my-2 border-gray-300" />
             </li>
         ))}
         </ul>
