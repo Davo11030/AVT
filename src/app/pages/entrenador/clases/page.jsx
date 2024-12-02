@@ -18,7 +18,8 @@ export default function EntrenadorClasesPage() {
         const fetchData = async () => {
             const { data: clasesData, error: clasesError } = await supabase
                 .from("clases")
-                .select("*");
+                .select("*")
+                .eq("identrenador", session.id); // Usamos el identrenador de la sesión para filtrar;
             if (clasesError) {
                 console.error("Error al cargar clases:", clasesError.message);
             } else {
