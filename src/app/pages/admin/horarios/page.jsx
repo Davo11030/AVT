@@ -139,7 +139,7 @@ export default function AdminPage() {
     <div className="flex justify-between items-start h-screen bg-gray-300 p-5 font-sans">
       {/* Contenedor del formulario */}
       <TravelMenu/>
-      <div className="w-2/5 bg-gray-400 p-5 rounded-lg shadow-lg max-h-[90vh] overflow-auto">
+      <div className="w-2/5 bg-gray-400 p-5 rounded-lg shadow-lg max-h-[90vh] ">
         <h2 className="text-white text-center mb-4 text-lg font-semibold">Gestionar Clases</h2>
         <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
           <div>

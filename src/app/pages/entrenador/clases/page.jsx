@@ -69,7 +69,7 @@ export default function EntrenadorClasesPage() {
     return (
         <div className="flex justify-between items-start h-screen bg-gray-300 p-5 font-sans">
             <TravelMenu />
-            <div className="w-full bg-gray-300 p-5 rounded-lg shadow-lg max-h-full overflow-auto">
+            <div className="w-full bg-gray-400 p-5 rounded-lg shadow-lg max-h-full overflow-auto">
                 <h2 className="text-gray-800 text-center mb-4 text-lg font-semibold">Clases del Entrenador</h2>
                 {loading ? (
                     <p className="text-center text-gray-600">Cargando clases...</p>

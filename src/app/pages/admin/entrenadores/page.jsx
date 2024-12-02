@@ -137,13 +137,13 @@ export default function Entrenadores() {
     };
 
     return (
-        <div className="flex flex-col md:flex-row justify-between items-start h-screen bg-gray-300 p-4 space-y-4 md:space-y-0">
+        <div className="flex flex-col md:flex-row h-screen bg-gray-300">
         {/* Formulario */}
         <TravelMenu/>
-        <div className="w-full md:w-2/5 bg-gray-400  text-white p-6 rounded-lg shadow-lg">
+        <div className="w-full md:w-2/5 bg-gray-400  text-white p-5 rounded-lg shadow-lg md:sticky md:top-0 h-fit">
 
             <h2 className="text-center text-xl font-bold mb-4">Entrenadores</h2>
-            <form onSubmit={handleSubmit} className="flex flex-col space-y-4">
+            <form onSubmit={handleSubmit} className="flex flex-col space-y-3">
             {[
                 { label: "Nombre", name: "nombre", type: "text" },
                 { label: "Disciplina", name: "disciplina", type: "text" },
@@ -183,7 +183,7 @@ export default function Entrenadores() {
         </div>
 
         {/* Lista */}
-        <div className="w-full md:w-3/5 bg-gray-200 p-6 rounded-lg shadow-lg">
+        <div className="w-full md:w-3/5 bg-gray-200 p-4 rounded-lg shadow-lg overflow-y-auto">
             <h2 className="text-center text-xl font-bold mb-4">Lista de Entrenadores</h2>
             <div>
             {entrenadores.length === 0 ? (
