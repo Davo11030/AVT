@@ -2,7 +2,8 @@
 
 import TravelMenu from '@/components/Navegation';
 import { createClient } from "@/utils/supabase/server";
-
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function Alumnos() {
@@ -15,7 +16,18 @@ export default function Alumnos() {
         contraseña: "",
     });
     const [selectedIndex, setSelectedIndex] = useState(null);
+    const { data: session, status } = useSession();
+    const router = useRouter();
 
+    useEffect(() => {
+        if (status === "unauthenticated") {
+        router.push("/403");
+        }
+    }, [status]);
+
+    // if (status === "loading") {
+    //     return <p>Cargando...</p>;
+    // }
     // Cargar alumnos desde la base de datos
     useEffect(() => {
         const fetchAlumnos = async () => {

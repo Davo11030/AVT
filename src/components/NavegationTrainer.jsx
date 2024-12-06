@@ -1,5 +1,6 @@
 "use client";
 
+import { signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
@@ -11,7 +12,11 @@ const TravelMenu = () => {
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
-
+  const handleLogout = () => {
+    signOut({
+      callbackUrl: "/", // Redirige al usuario a la página de inicio u otra URL después de cerrar sesión
+    });
+  };
   const handleNavigation = (path) => {
     router.push(path); // Navega a la ruta
     setIsOpen(false); // Cierra el menú después de navegar
@@ -72,7 +77,7 @@ const TravelMenu = () => {
             <li>
               <button
                 className="w-full text-center py-4 text-lg hover:bg-gray-200 text-black"
-                onClick={() => handleNavigation("/")}
+                onClick={handleLogout}
               >
                 Cerrar sesion
               </button>

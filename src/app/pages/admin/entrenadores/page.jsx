@@ -2,6 +2,8 @@
 
 import TravelMenu from '@/components/Navegation';
 import { createClient } from "@/utils/supabase/server";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function Entrenadores() {
@@ -14,7 +16,14 @@ export default function Entrenadores() {
         contraseña: "",
     });
     const [selectedIndex, setSelectedIndex] = useState(null);
+    const { data: session, status } = useSession();
+    const router = useRouter();
 
+    useEffect(() => {
+        if (status === "unauthenticated") {
+        router.push("/403");
+        }
+    }, [status]);
     // Cargar entrenadores desde la base de datos
     useEffect(() => {
         const fetchEntrenadores = async () => {

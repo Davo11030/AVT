@@ -3,14 +3,22 @@
 import TravelMenu from '@/components/NavegationAlumno';
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs"; // Asegúrate de usar el cliente correcto
 import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
+
 export default function AlumnPage() {
-  const { data: session } = useSession();
   const [userData, setUserData] = useState(null);
   const [loading, setLoading] = useState(true);
   const supabase = createClientComponentClient(); // Inicializa el cliente de Supabase
+  const { data: session, status } = useSession();
+  const router = useRouter();
 
+  useEffect(() => {
+      if (status === "unauthenticated") {
+      router.push("/403");
+      }
+  }, [status]);
   // Efecto para cargar datos de la tabla alumnos
   useEffect(() => {
     if (session?.id) {

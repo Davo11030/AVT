@@ -2,17 +2,23 @@
 import TravelMenu from "@/components/NavegationTrainer";
 import { createClient } from "@/utils/supabase/server";
 import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function EntrenadorClasesPage() {
-    const { data: session } = useSession();  // Obtiene los datos de la sesión del alumno
     const [clases, setClases] = useState([]);
     const [alumnos, setAlumnos] = useState([]);
     const [alumnosPorClase, setAlumnosPorClase] = useState({});
     const [loading, setLoading] = useState(true);
     const [isOpen, setIsOpen] = useState({});  // Estado para controlar si el listado de alumnos está desplegado
     const supabase = createClient();
-
+    const { data: session, status } = useSession();
+    const router = useRouter();
+    useEffect(() => {
+        if (status === "unauthenticated") {
+        router.push("/403");
+        }
+    }, [status]);
     // Cargar datos iniciales
     useEffect(() => {
         const fetchData = async () => {

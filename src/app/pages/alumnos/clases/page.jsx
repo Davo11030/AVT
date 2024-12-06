@@ -2,17 +2,24 @@
 import TravelMenu from "@/components/NavegationAlumno";
 import { createClient } from "@/utils/supabase/server";
 import { useSession } from "next-auth/react"; // Asegúrate de tener next-auth configurado
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function AdminPage() {
-    const { data: session } = useSession();  // Obtiene los datos de la sesión del usuario
     const [clases, setClases] = useState([]);
     const [clasesa, setClasesa] = useState([]);
     const [entrenadores, setEntrenadores] = useState([]);
     const [userData, setUserData] = useState(null);
     const [loading, setLoading] = useState(true);
     const supabase = createClient();
+    const { data: session, status } = useSession();
+    const router = useRouter();
 
+    useEffect(() => {
+        if (status === "unauthenticated") {
+        router.push("/403");
+        }
+    }, [status]);
     // Cargar datos iniciales
     useEffect(() => {
         const fetchData = async () => {
