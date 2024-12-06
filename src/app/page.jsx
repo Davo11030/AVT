@@ -3,6 +3,8 @@
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { z } from "zod";
+
 
 export default function Login() {
   const [username, setUsername] = useState('');
@@ -10,10 +12,16 @@ export default function Login() {
   const [error, setError] = useState('');
   const router = useRouter(); // Cambiar navegación aquí
 
+
+  const loginSchema = z.object({
+    username: z.string().min(1, "El usuario es obligatorio"),
+    password: z.string().min(1, "La contraseña es obligatoria"),
+  });
   const handleLogin = async (e) => {
     e.preventDefault();
     setError('');
-
+    loginSchema.parse({ username, password });
+    
     const result = await signIn('credentials', {
       redirect: false,
       username,

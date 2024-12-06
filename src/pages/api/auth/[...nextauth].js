@@ -83,7 +83,7 @@ export default NextAuth({
       session.id = token.id;
       session.name = token.name;
       session.role = token.role;
-      console.log("imprimiendo session:", session)
+      // console.log("imprimiendo session:", session)
       return session;
     },
     
