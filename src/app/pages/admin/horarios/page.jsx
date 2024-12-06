@@ -145,12 +145,12 @@ export default function AdminPage() {
   };
 
   return (
-    <div className="flex justify-between items-start h-screen bg-gray-300 p-5 font-sans">
+    <div className="flex flex-col md:flex-row h-screen bg-gray-300">
       {/* Contenedor del formulario */}
       <TravelMenu/>
-      <div className="w-2/5 bg-gray-400 p-5 rounded-lg shadow-lg max-h-[90vh] ">
+      <div className="w-full md:w-2/5 bg-gray-400  text-white p-5 rounded-lg shadow-lg md:sticky md:top-0 h-fit">
         <h2 className="text-white text-center mb-4 text-lg font-semibold">Gestionar Clases</h2>
-        <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
+        <form className="flex flex-col space-y-3" onSubmit={handleSubmit}>
           <div>
             <label className="block text-white text-sm font-medium mb-2" htmlFor="nombre">
               Nombre de la clase:
@@ -231,8 +231,8 @@ export default function AdminPage() {
       </div>
 
       {/* Contenedor de la lista */}
-      <div className="w-3/5 bg-gray-300 p-5 rounded-lg shadow-lg max-h-full overflow-auto">
-        <h2 className="text-gray-800 text-center mb-4 text-lg font-semibold">Lista de Clases</h2>
+      <div className="w-full md:w-3/5 bg-gray-200 p-4 rounded-lg shadow-lg overflow-y-auto">
+      <h2 className="text-gray-800 text-center mb-4 text-lg font-semibold">Lista de Clases</h2>
         {clases.length === 0 ? (
           <p className="text-center text-gray-600">No hay clases registradas.</p>
         ) : (
