@@ -161,7 +161,7 @@ export default function AdminPage() {
               name="nombre"
               value={formData.nombre}
               onChange={handleChange}
-              className="w-full p-2 border rounded-lg"
+              className="w-full p-2 border rounded-lg text-black"
               required
             />
           </div>
@@ -174,7 +174,7 @@ export default function AdminPage() {
               name="identrenador"
               value={formData.identrenador}
               onChange={handleChange}
-              className="w-full p-2 border rounded-lg"
+              className="w-full p-2 border rounded-lg text-black"
               required
             >
               <option value="">Selecciona un entrenador</option>
@@ -195,7 +195,7 @@ export default function AdminPage() {
               name="hora"
               value={formData.hora}
               onChange={handleChange}
-              className="w-full p-2 border rounded-lg"
+              className="w-full p-2 border rounded-lg text-black"
               required
             />
           </div>
@@ -209,7 +209,7 @@ export default function AdminPage() {
               name="dias"
               value={formData.dias}
               onChange={handleChange}
-              className="w-full p-2 border rounded-lg"
+              className="w-full p-2 border rounded-lg text-black"
               placeholder="Ejemplo: Lunes, Miércoles, Viernes"
               required
             />
